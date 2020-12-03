@@ -3,6 +3,17 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+import axios from 'axios';
+const resMe = axios.get('https://api.github.com/users/willmond-al');
+
+
+resMe.then(futureData =>{
+  console.log(futureData.data)
+})
+
+.catch(drama => {
+  console.log(drama)
+})
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -49,6 +60,64 @@ const followersArray = [];
       </div>
     </div>
 */
+
+const cardEntry = document.querySelector('.cards')
+
+function gitCardMaker({Obj}){
+
+  const card = document.createElement('div');
+  const image = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const name = document.createElement('h3');
+  const username = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p'); 
+  const profileLink = document.createElement('a'); 
+  const followers = document.createElement('p'); 
+  const following = document.createElement('p'); 
+  const bio = document.createElement('p'); 
+
+  image.src = Obj.data.avatar_url;
+  name.textContent = Obj.data.name;
+  username.textContent = Obj.data.login;
+  location.textContent = `Location: ${Obj.data.location}`;
+  profile.textContent = 'Profile:'
+  profileLink.href = Obj.data.html_url;
+  profileLink.textContent = Obj.data.html_url;
+  followers.textContent = `Followers: ${Obj.data.followers}`;
+  following.textContent = `Following: ${Obj.data.following}`;
+  bio.textContent = `Bio: ${Obj.data.bio}`;
+  
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  username.classList.add('username');
+
+  card.appendChild(image);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+  return card
+}
+
+axios
+    .get('https://api.github.com/users/willmond-al')
+    .then(res => {
+      const cardData = res.data;
+      const newGitCard = gitCardMaker(cardData);
+      cardEntry.appendChild(newGitCard);
+    })
+
+
+
+
+
 
 /*
   List of LS Instructors Github username's:
