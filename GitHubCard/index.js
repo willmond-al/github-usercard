@@ -4,16 +4,16 @@
     https://api.github.com/users/<your name>
 */
 import axios from 'axios';
-const resMe = axios.get('https://api.github.com/users/willmond-al');
+// const resMe = axios.get('https://api.github.com/users/willmond-al');
 
 
-resMe.then(futureData =>{
-  console.log(futureData.data)
-})
+// resMe.then(futureData =>{
+//   console.log(futureData.data)
+// })
 
-.catch(drama => {
-  console.log(drama)
-})
+// .catch(drama => {
+//   console.log(drama)
+// })
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -63,7 +63,7 @@ const followersArray = [];
 
 const cardEntry = document.querySelector('.cards')
 
-function gitCardMaker({Obj}){
+function gitCardMaker(Obj){
 
   const card = document.createElement('div');
   const image = document.createElement('img');
@@ -77,16 +77,17 @@ function gitCardMaker({Obj}){
   const following = document.createElement('p'); 
   const bio = document.createElement('p'); 
 
-  image.src = Obj.data.avatar_url;
-  name.textContent = Obj.data.name;
-  username.textContent = Obj.data.login;
-  location.textContent = `Location: ${Obj.data.location}`;
+
+  image.src = Obj.avatar_url;
+  name.textContent = Obj.name;
+  username.textContent = Obj.login;
+  location.textContent = `Location: ${Obj.location}`;
   profile.textContent = 'Profile:'
-  profileLink.href = Obj.data.html_url;
-  profileLink.textContent = Obj.data.html_url;
-  followers.textContent = `Followers: ${Obj.data.followers}`;
-  following.textContent = `Following: ${Obj.data.following}`;
-  bio.textContent = `Bio: ${Obj.data.bio}`;
+  profileLink.href = Obj.html_url;
+  profileLink.textContent = Obj.html_url;
+  followers.textContent = `Followers: ${Obj.followers}`;
+  following.textContent = `Following: ${Obj.following}`;
+  bio.textContent = `Bio: ${Obj.bio}`;
   
   card.classList.add('card');
   cardInfo.classList.add('card-info');
@@ -108,11 +109,14 @@ function gitCardMaker({Obj}){
 
 axios
     .get('https://api.github.com/users/willmond-al')
-    .then(res => {
-      const cardData = res.data;
-      const newGitCard = gitCardMaker(cardData);
+    .then((res) => {
+      const received = res.data
+      console.log(received)
+      const newGitCard = gitCardMaker(received);
       cardEntry.appendChild(newGitCard);
     })
+
+    
 
 
 
