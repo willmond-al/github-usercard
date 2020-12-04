@@ -39,8 +39,18 @@ import axios from 'axios';
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'bigknell', 'luishrd'];
+followersArray.forEach(item => {
+  const URL = `https://api.github.com/users/${item}`
+  axios
+    .get(URL)
+    .then((res) => {
+      const received = res.data
+      const newGitCard = gitCardMaker(received);
+      cardEntry.appendChild(newGitCard);
+    })
 
+})
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -100,6 +110,7 @@ function gitCardMaker(Obj){
   cardInfo.appendChild(username);
   cardInfo.appendChild(location);
   cardInfo.appendChild(profile);
+  profile.appendChild(profileLink);
   cardInfo.appendChild(followers);
   cardInfo.appendChild(following);
   cardInfo.appendChild(bio);
@@ -111,7 +122,6 @@ axios
     .get('https://api.github.com/users/willmond-al')
     .then((res) => {
       const received = res.data
-      console.log(received)
       const newGitCard = gitCardMaker(received);
       cardEntry.appendChild(newGitCard);
     })
